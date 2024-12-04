@@ -1,3 +1,7 @@
+import fs from "fs";
+import path from "path";
+import R from "rambda";
+
 class MinHeap {
   private heap: number[] = [];
 
@@ -82,3 +86,12 @@ class MinHeap {
 }
 
 export { MinHeap };
+
+// __filename
+export const read = R.pipe(
+  (filename: string) => filename.split("/").pop()!.split(".")[0] as string,
+  (task: string) => path.join(__dirname, `../inputs/${task}`),
+  (path: string) => fs.readFileSync(path, "utf8"),
+  R.split("\n"),
+  R.filter((s) => s.length > 0)
+);
